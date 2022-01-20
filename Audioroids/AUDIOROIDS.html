@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <title>AUDIOROIDS</title>
@@ -8,17 +7,13 @@
 <body>
 <canvas id="xCanvas">  </canvas>
 
-<script type="text/javascript" src="https://www.scmplayer.net/script.js"
-        data-config="{'skin':'skins/tunes/skin.css','volume':50,'autoplay':false,'shuffle':false,'repeat':2,'placement':'bottom','showplaylist':false,'playlist':[{'title':'Riley Ella - Kairo','url':'https://www.youtube.com/watch?v=Wz_RKaGMGds'}]}" ></script>
-
-
 <script>
     canvas = document.querySelector("canvas");
     canvas.width = window.innerWidth * 0.95 ;
     canvas.height = window.innerHeight* 0.95;
 
     const FPS = 30;                // frames per second
-    const FRICTION = 0.7;          // friction coefficient of space (0 = no friction, 1 = lots of friction)
+    const FRICTION = 0.7;          // Wiederstand/Reibung
     const LASER_DIST = 0.8;        // Reichweite des Lasers
     const LASER_MAX = 15;          // Anzahl an Laserpunkten
     const LASER_SPD = 500;         // pixel/sec
@@ -95,14 +90,14 @@ function createAsteroidBelt() {  // spawn-punkte der roids
         if (r == Math.ceil(ROID_SIZE / 2)) { // large asteroid
             roids.push(newAsteroid(x, y, Math.ceil(ROID_SIZE / 4)));
             roids.push(newAsteroid(x, y, Math.ceil(ROID_SIZE / 4)));
-            fx2.play();
+            fx2.play(); // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
         } else if (r == Math.ceil(ROID_SIZE / 4)) { // medium asteroid
             roids.push(newAsteroid(x, y, Math.ceil(ROID_SIZE / 8)));
             roids.push(newAsteroid(x, y, Math.ceil(ROID_SIZE / 8)));
-            fx6.play();
+            fx6.play(); // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
         }
         roids.splice(index, 1);  // Zerstört Asteroid
-        fx4.play();
+        fx4.play(); // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     }
 
     function distBetweenPoints(x1, y1, x2, y2) {
@@ -110,10 +105,8 @@ function createAsteroidBelt() {  // spawn-punkte der roids
 
     function explodeShip() {
         ship.explodeTime = Math.ceil(SHIP_EXPLODE_DUR * FPS);
-        fx1.play();
-
-     // SOUND !!!!!!
-    }
+        fx1.play(); // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+   }
 
     function keyDown(/** @type {KeyboardEvent} */ ev) {
         switch(ev.keyCode) {
@@ -195,9 +188,10 @@ function createAsteroidBelt() {  // spawn-punkte der roids
             });
         }
         ship.canShoot = false;
-        fx3.play();
+        fx3.play(); // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     }
-
+// -------------- SOUND --------------- //// ---------------- SOUND --------------- //
+    
     function Music(srcLow, srcHigh) {
         this.soundLow = new Audio(srcLow);
         this.soundHigh = new Audio(srcHigh);
@@ -216,7 +210,7 @@ function createAsteroidBelt() {  // spawn-punkte der roids
             }
         } }
 
-        // ---------------- SOUND --------------- //  // ---------------- SOUND --------------- // // ---------------- SOUND --------------- //
+// ---------------- SOUND --------------- //  // ---------------- SOUND --------------- // 
     function Music(srcLow, srcHigh) {
         this.soundLow = new Audio(srcLow);
         this.soundHigh = new Audio(srcHigh);
@@ -265,8 +259,7 @@ function createAsteroidBelt() {  // spawn-punkte der roids
             this.streams[this.streamNum].currentTime = 0;
         }
     }
-    // ---------------- SOUND --------------- // // ---------------- SOUND --------------- // // ---------------- SOUND --------------- //
-
+// ---------------- SOUND --------------- // // ---------------- SOUND --------------- // 
 
     function update() {
         var blinkOn = ship.blinkNum % 2 == 0;
@@ -377,7 +370,7 @@ function createAsteroidBelt() {  // spawn-punkte der roids
                 }
             }
         } else {
-            // draw the explosion (concentric circles of different colours)
+            // styling Explosionszirkel
             ctx.fillStyle = "darkred";
             ctx.beginPath();
             ctx.arc(ship.x, ship.y, ship.r * 1.7, 0, Math.PI * 2, false);
@@ -400,7 +393,7 @@ function createAsteroidBelt() {  // spawn-punkte der roids
             ctx.fill();
         }
 
-        // show ship's collision circle
+        // Kollisionsumriss einzelner gespawnter Objekte
         if (SHOW_BOUNDING) {
             ctx.strokeStyle = "lime";
             ctx.beginPath();
@@ -417,12 +410,12 @@ function createAsteroidBelt() {  // spawn-punkte der roids
         // LASER
         for (var i = 0; i < ship.lasers.length; i++) {
             if (ship.lasers[i].explodeTime == 0) {
-                ctx.fillStyle = "salmon";
+                ctx.fillStyle = "#880000";
                 ctx.beginPath();
                 ctx.arc(ship.lasers[i].x, ship.lasers[i].y, SHIP_SIZE / 15, 0, Math.PI * 2, false);
                 ctx.fill();
             } else {
-                // EXPLOSION
+                // EXPLOSION (Ringe)
                 ctx.fillStyle = "orangered";
                 ctx.beginPath();
                 ctx.arc(ship.lasers[i].x, ship.lasers[i].y, ship.r * 0.75, 0, Math.PI * 2, false);
@@ -516,7 +509,7 @@ function createAsteroidBelt() {  // spawn-punkte der roids
                 // Laser position verändern
                 ship.lasers[i].x += ship.lasers[i].xv;
                 ship.lasers[i].y += ship.lasers[i].yv;
-                // Dastanz zws. Schiff und laser
+                // Distanz zws. Schiff und laser
                 ship.lasers[i].dist += Math.sqrt(Math.pow(ship.lasers[i].xv, 2) + Math.pow(ship.lasers[i].yv, 2));}
 
             // Der Abgrund
